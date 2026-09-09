@@ -1,0 +1,33 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.vscode/
+
+# Generated files
+output/
+temp/
+
+# AI model/cache files
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Environment/secrets
+.env
+
+# Test audio/video
+*.wav
+*.mp3
+*.m4a
+*.mp4
+
+# Subtitles
+*.txt
+*.srt
+
+
+# OS
+Thumbs.db
+.DS_Store
