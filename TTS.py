@@ -6,7 +6,7 @@ import re
 
 pipline = KPipeline(lang_code="a", device="cuda")
 
-def generate_ai_audio(txt_filepath, output_dir="tts_output_folder", voice="af_heart", speed=1):
+def generate_ai_audio(txt_filepath, output_dir="tts_output_folder", voice="af_heart", speed=1, pause_ms=350):
 
     if not txt_filepath.lower().endswith('.txt'):
         raise ValueError(f"Input must be a txt file. Recieved {txt_filepath}")
@@ -25,10 +25,14 @@ def generate_ai_audio(txt_filepath, output_dir="tts_output_folder", voice="af_he
         output_wav_path = os.path.join(output_dir, f"{safe_filename}.wav")
 
         generator = pipline(text, voice=voice, speed=speed)
+
+        silence = np.zeros(int(24000 * pause_ms / 1000), dtype=np.float32)
+
         audio_chunks = []
 
         for gs, ps, audio in generator:
             audio_chunks.append(audio)
+            audio_chunks.append(silence)
 
         final_audio = np.concatenate(audio_chunks)
         sample_rate = 24000
